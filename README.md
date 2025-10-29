@@ -140,13 +140,6 @@ Se quiser contribuir:
 
 ---
 
-## 📄 Licença
-
-Este projeto está sob a licença **MIT**.  
-Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
 ## 💬 Sobre o Desenvolvedor
 
 Desenvolvido por **Yan Fellippe Gomes Basílio**, estudante de **Ciência da Computação** com foco em **desenvolvimento fullstack**.  
