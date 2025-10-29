@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Trebuchet MS', Verdana, sans-serif;
+    background: linear-gradient(135deg, #e8f4fd 0%, #d9e6f7 50%, #b8d4f0 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .orkut-card {
+    @apply bg-white rounded-xl shadow-xl border-2 border-gray-100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orkut-button {
+    @apply bg-orkut-pink text-white font-bold py-3 px-6 rounded-xl hover:bg-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .orkut-input {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orkut-pink focus:border-orkut-pink transition-all duration-200;
+  }
+  
+  .full-width-layout {
+    @apply w-full min-w-0 flex-1;
+  }
+}
