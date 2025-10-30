@@ -45,11 +45,31 @@ const Feed = ({ user }) => {
         animate={{ opacity: 1, y: 0 }}
         className="orkut-card p-6"
       >
+        <div className="flex items-start space-x-3 mb-4">
+          {/* Avatar do usuário na criação de post */}
+          {user.profile?.avatar ? (
+            <img
+              src={user.profile.avatar}
+              alt={user.name}
+              className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 flex-shrink-0"
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gradient-to-br from-orkut-pink to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <span className="text-white font-bold text-sm">
+                {user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+              </span>
+            </div>
+          )}
+          <div className="flex-1">
+            <p className="text-sm text-gray-600 mb-2">O que você está pensando, {user.name.split(' ')[0]}?</p>
+          </div>
+        </div>
+        
         <form onSubmit={handleSubmitPost}>
           <textarea
             value={newPost}
             onChange={(e) => setNewPost(e.target.value)}
-            placeholder="O que você está pensando?"
+            placeholder="Compartilhe algo interessante..."
             className="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-orkut-pink focus:border-orkut-pink transition-all duration-200"
             rows="3"
           />
@@ -79,11 +99,20 @@ const Feed = ({ user }) => {
             {/* Post Header */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-orkut-pink to-pink-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">
-                    {post.author.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
-                  </span>
-                </div>
+                {/* Avatar do autor do post */}
+                {isPostAuthor(post) && user.profile?.avatar ? (
+                  <img
+                    src={user.profile.avatar}
+                    alt={post.author}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-gray-200"
+                  />
+                ) : (
+                  <div className="w-10 h-10 bg-gradient-to-br from-orkut-pink to-pink-600 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">
+                      {post.author.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                    </span>
+                  </div>
+                )}
                 <div>
                   <h4 className="font-bold text-gray-800">{post.author}</h4>
                   <p className="text-sm text-gray-500">{post.timestamp}</p>
@@ -122,8 +151,25 @@ const Feed = ({ user }) => {
                 <span className="text-sm">{post.likes}</span>
               </button>
               
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-orkut-pink transition-colors duration-200">
-                <MessageCircle size={18} />
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-orkut-pink transition-colors duration-200 group">
+                <div className="relative">
+                  {user.profile?.avatar ? (
+                    <img
+                      src={user.profile.avatar}
+                      alt={user.name}
+                      className="w-6 h-6 rounded-full object-cover border-2 border-gray-300 group-hover:border-orkut-pink transition-colors duration-200"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 bg-gradient-to-br from-orkut-pink to-pink-600 rounded-full flex items-center justify-center border-2 border-gray-300 group-hover:border-orkut-pink transition-colors duration-200">
+                      <span className="text-white font-bold text-xs">
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm border border-gray-200">
+                    <MessageCircle size={10} className="text-gray-500 group-hover:text-orkut-pink transition-colors duration-200" />
+                  </div>
+                </div>
                 <span className="text-sm">{post.comments}</span>
               </button>
               
