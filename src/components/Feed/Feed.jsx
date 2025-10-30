@@ -4,8 +4,11 @@ import { Heart, MessageCircle, Share2, Send, Trash2 } from 'lucide-react';
 import usePosts from '../../hooks/usePosts';
 
 const Feed = ({ user }) => {
-  const { posts, loading, createPost, toggleLike, deletePost } = usePosts();
+  const { posts, loading, createPost, toggleLike, deletePost, addComment, deleteComment } = usePosts();
   const [newPost, setNewPost] = useState('');
+  const [showComments, setShowComments] = useState({});
+  const [newComment, setNewComment] = useState({});
+  const [showFullTimestamp, setShowFullTimestamp] = useState({});
 
   const handleSubmitPost = (e) => {
     e.preventDefault();
@@ -27,6 +30,43 @@ const Feed = ({ user }) => {
 
   const isPostAuthor = (post) => {
     return post.author === user.name;
+  };
+
+  const toggleComments = (postId) => {
+    setShowComments(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
+  };
+
+  const handleSubmitComment = (e, postId) => {
+    e.preventDefault();
+    const commentText = newComment[postId];
+    if (commentText && commentText.trim()) {
+      addComment(postId, commentText.trim(), user.name);
+      setNewComment(prev => ({
+        ...prev,
+        [postId]: ''
+      }));
+    }
+  };
+
+  const handleDeleteComment = (postId, commentId) => {
+    if (window.confirm('Tem certeza que deseja excluir este comentário?')) {
+      deleteComment(postId, commentId, user.email);
+    }
+  };
+
+  const isCommentAuthor = (comment) => {
+    return comment.author === user.name;
+  };
+
+  const toggleTimestampDisplay = (id, type = 'post') => {
+    const key = `${type}_${id}`;
+    setShowFullTimestamp(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
   };
 
   if (loading) {
@@ -115,7 +155,20 @@ const Feed = ({ user }) => {
                 )}
                 <div>
                   <h4 className="font-bold text-gray-800">{post.author}</h4>
-                  <p className="text-sm text-gray-500">{post.timestamp}</p>
+                  <p 
+                    className="text-sm text-gray-500 cursor-pointer hover:text-orkut-pink transition-colors duration-200 select-none" 
+                    onClick={() => toggleTimestampDisplay(post.id, 'post')}
+                    title={showFullTimestamp[`post_${post.id}`] 
+                      ? "Clique para ver formato resumido" 
+                      : "Clique para ver data/hora completa"
+                    }
+                  >
+                    {showFullTimestamp[`post_${post.id}`] 
+                      ? (post.fullTimestamp || post.timestamp)
+                      : post.timestamp
+                    } 
+                    <span className="ml-1 text-xs opacity-50">🕒</span>
+                  </p>
                 </div>
               </div>
               
@@ -151,7 +204,10 @@ const Feed = ({ user }) => {
                 <span className="text-sm">{post.likes}</span>
               </button>
               
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-orkut-pink transition-colors duration-200 group">
+              <button 
+                onClick={() => toggleComments(post.id)}
+                className="flex items-center space-x-2 text-gray-600 hover:text-orkut-pink transition-colors duration-200 group"
+              >
                 <div className="relative">
                   {user.profile?.avatar ? (
                     <img
@@ -178,6 +234,106 @@ const Feed = ({ user }) => {
                 <span className="text-sm">Compartilhar</span>
               </button>
             </div>
+
+            {/* Comments Section */}
+            {showComments[post.id] && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mt-4 pt-4 border-t border-gray-100"
+              >
+                {/* Comments List */}
+                {post.commentsList && post.commentsList.length > 0 && (
+                  <div className="space-y-3 mb-4">
+                    {post.commentsList.map((comment) => (
+                      <div key={comment.id} className="flex items-start space-x-3">
+                        {/* Comment Author Avatar */}
+                        {isCommentAuthor(comment) && user.profile?.avatar ? (
+                          <img
+                            src={user.profile.avatar}
+                            alt={comment.author}
+                            className="w-8 h-8 rounded-full object-cover border border-gray-200 flex-shrink-0"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-bold text-xs">
+                              {comment.author.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                            </span>
+                          </div>
+                        )}
+                        
+                        {/* Comment Content */}
+                        <div className="flex-1 bg-gray-50 rounded-lg p-3">
+                          <div className="flex items-center justify-between mb-1">
+                            <h5 className="font-semibold text-sm text-gray-800">{comment.author}</h5>
+                            {isCommentAuthor(comment) && (
+                              <button
+                                onClick={() => handleDeleteComment(post.id, comment.id)}
+                                className="text-gray-400 hover:text-red-500 transition-colors duration-200"
+                                title="Excluir comentário"
+                              >
+                                <Trash2 size={12} />
+                              </button>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-700">{comment.content}</p>
+                          <p 
+                            className="text-xs text-gray-500 mt-1 cursor-pointer hover:text-orkut-pink transition-colors duration-200" 
+                            onClick={() => toggleTimestampDisplay(comment.id, 'comment')}
+                            title="Clique para ver data/hora completa"
+                          >
+                            {showFullTimestamp[`comment_${comment.id}`] 
+                              ? (comment.fullTimestamp || comment.timestamp)
+                              : comment.timestamp
+                            }
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Add Comment Form */}
+                <form onSubmit={(e) => handleSubmitComment(e, post.id)} className="flex items-start space-x-3">
+                  {/* User Avatar */}
+                  {user.profile?.avatar ? (
+                    <img
+                      src={user.profile.avatar}
+                      alt={user.name}
+                      className="w-8 h-8 rounded-full object-cover border border-gray-200 flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-gradient-to-br from-orkut-pink to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-xs">
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* Comment Input */}
+                  <div className="flex-1 flex space-x-2">
+                    <input
+                      type="text"
+                      value={newComment[post.id] || ''}
+                      onChange={(e) => setNewComment(prev => ({
+                        ...prev,
+                        [post.id]: e.target.value
+                      }))}
+                      placeholder="Escreva um comentário..."
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orkut-pink focus:border-orkut-pink transition-all duration-200"
+                    />
+                    <button
+                      type="submit"
+                      disabled={!newComment[post.id]?.trim()}
+                      className="px-4 py-2 bg-orkut-pink text-white rounded-full text-sm font-medium hover:bg-pink-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
+                    >
+                      <Send size={14} />
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            )}
           </motion.div>
         ))}
       </div>

@@ -2,7 +2,23 @@
   "name": "orkut-clone",
   "version": "1.0.0",
   "private": true,
+  "description": "Clone nostálgico do Orkut com React - Reviva os anos 2000!",
+  "author": "Yan Fellippe",
+  "license": "MIT",
   "homepage": "https://YanFellippe.github.io/orkut-reimagined",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YanFellippe/orkut-reimagined.git"
+  },
+  "keywords": [
+    "orkut",
+    "clone",
+    "react",
+    "social-network",
+    "nostalgia",
+    "2000s",
+    "frontend"
+  ],
   "dependencies": {
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.294.0",
@@ -17,7 +33,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "dev": "npm start",
+    "preview": "npm run build && npx serve -s build",
+    "lint": "eslint src --ext .js,.jsx",
+    "format": "prettier --write src/**/*.{js,jsx,css,md}",
+    "analyze": "npm run build && npx serve -s build"
   },
   "eslintConfig": {
     "extends": [
