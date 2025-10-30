@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { User, MessageCircle, Users, Globe, Settings, LogOut } from 'lucide-react';
 import ProfileCard from '../ProfileCard/ProfileCard';
+import AllFriendsModal from '../Modals/AllFriendsModal';
+import AllCommunitiesModal from '../Modals/AllCommunitiesModal';
+import { demoFriends, demoCommunities } from '../../utils/demoData';
 
 const Sidebar = ({ user, onLogout, isOpen, onToggle }) => {
+  const [showAllFriends, setShowAllFriends] = useState(false);
+  const [showAllCommunities, setShowAllCommunities] = useState(false);
+
+  const handleMenuClick = (label) => {
+    if (label === 'Amigos') {
+      setShowAllFriends(true);
+    } else if (label === 'Comunidades') {
+      setShowAllCommunities(true);
+    }
+    // Fechar a sidebar após clicar em um item no mobile
+    onToggle();
+  };
+
   const menuItems = [
-    { icon: User, label: 'Perfil', href: '#' },
-    { icon: MessageCircle, label: 'Recados', href: '#' },
-    { icon: Users, label: 'Amigos', href: '#' },
-    { icon: Globe, label: 'Comunidades', href: '#' },
-    { icon: Settings, label: 'Configurações', href: '#' },
+    { icon: User, label: 'Perfil', action: () => handleMenuClick('Perfil') },
+    { icon: MessageCircle, label: 'Recados', action: () => handleMenuClick('Recados') },
+    { icon: Users, label: 'Amigos', action: () => handleMenuClick('Amigos') },
+    { icon: Globe, label: 'Comunidades', action: () => handleMenuClick('Comunidades') },
+    { icon: Settings, label: 'Configurações', action: () => handleMenuClick('Configurações') },
   ];
 
   return (
@@ -50,17 +66,17 @@ const Sidebar = ({ user, onLogout, isOpen, onToggle }) => {
           {/* Menu Items */}
           <nav className="space-y-2">
             {menuItems.map((item, index) => (
-              <motion.a
+              <motion.button
                 key={item.label}
-                href={item.href}
+                onClick={item.action}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-orkut-blue transition-colors duration-200 text-gray-700 hover:text-orkut-pink"
+                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-orkut-blue transition-colors duration-200 text-gray-700 hover:text-orkut-pink w-full text-left"
               >
                 <item.icon size={20} />
                 <span className="font-medium">{item.label}</span>
-              </motion.a>
+              </motion.button>
             ))}
             
             {/* Logout Button */}
@@ -77,6 +93,21 @@ const Sidebar = ({ user, onLogout, isOpen, onToggle }) => {
           </nav>
         </div>
       </motion.aside>
+
+      {/* Modals */}
+      {showAllFriends && (
+        <AllFriendsModal
+          friends={demoFriends}
+          onClose={() => setShowAllFriends(false)}
+        />
+      )}
+
+      {showAllCommunities && (
+        <AllCommunitiesModal
+          communities={demoCommunities}
+          onClose={() => setShowAllCommunities(false)}
+        />
+      )}
     </>
   );
 };
