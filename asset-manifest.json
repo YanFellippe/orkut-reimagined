@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/orkut-reimagined/static/css/main.a47aa6cb.css",
-    "main.js": "/orkut-reimagined/static/js/main.6ffab4dd.js",
+    "main.css": "/orkut-reimagined/static/css/main.33618203.css",
+    "main.js": "/orkut-reimagined/static/js/main.82971a0d.js",
     "index.html": "/orkut-reimagined/index.html",
-    "main.a47aa6cb.css.map": "/orkut-reimagined/static/css/main.a47aa6cb.css.map",
-    "main.6ffab4dd.js.map": "/orkut-reimagined/static/js/main.6ffab4dd.js.map"
+    "main.33618203.css.map": "/orkut-reimagined/static/css/main.33618203.css.map",
+    "main.82971a0d.js.map": "/orkut-reimagined/static/js/main.82971a0d.js.map"
   },
   "entrypoints": [
-    "static/css/main.a47aa6cb.css",
-    "static/js/main.6ffab4dd.js"
+    "static/css/main.33618203.css",
+    "static/js/main.82971a0d.js"
   ]
 }
