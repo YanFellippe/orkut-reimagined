@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/orkut-reimagined/static/css/main.a47aa6cb.css",
+    "main.js": "/orkut-reimagined/static/js/main.6ffab4dd.js",
+    "index.html": "/orkut-reimagined/index.html",
+    "main.a47aa6cb.css.map": "/orkut-reimagined/static/css/main.a47aa6cb.css.map",
+    "main.6ffab4dd.js.map": "/orkut-reimagined/static/js/main.6ffab4dd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a47aa6cb.css",
+    "static/js/main.6ffab4dd.js"
+  ]
+}
