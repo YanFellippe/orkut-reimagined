@@ -58,6 +58,15 @@ const usePosts = () => {
         likes: 15,
         comments: 5,
         likedBy: [],
+        photos: {
+          images: [
+            {
+              url: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop',
+              name: 'perfil.jpg'
+            }
+          ],
+          album: 'perfil'
+        },
         commentsList: [
           {
             id: 1,
@@ -211,6 +220,52 @@ const usePosts = () => {
           },
         ],
       },
+      {
+        id: 4,
+        author: 'Pedro Oliveira',
+        content: 'Viagem incrível para a praia com os amigos! 🏖️☀️',
+        timestamp: formatTimestamp(fiveHoursAgo),
+        createdAt: fiveHoursAgo.toISOString(),
+        fullTimestamp: formatFullTimestamp(fiveHoursAgo),
+        likes: 42,
+        comments: 8,
+        likedBy: [],
+        photos: {
+          images: [
+            {
+              url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop',
+              name: 'praia1.jpg'
+            },
+            {
+              url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop',
+              name: 'praia2.jpg'
+            },
+            {
+              url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=400&fit=crop',
+              name: 'praia3.jpg'
+            }
+          ],
+          album: 'viagem'
+        },
+        commentsList: [
+          {
+            id: 1,
+            author: 'Maria Silva',
+            content: 'Que lugar lindo! Quero ir também! 😍',
+            timestamp: formatTimestamp(fourHoursAgo),
+            createdAt: fourHoursAgo.toISOString(),
+            fullTimestamp: formatFullTimestamp(fourHoursAgo),
+          },
+          {
+            id: 2,
+            author: 'João Santos',
+            content: 'Praia perfeita para relaxar! 🌊',
+            timestamp: formatTimestamp(threeHoursAgo),
+            createdAt: threeHoursAgo.toISOString(),
+            fullTimestamp: formatFullTimestamp(threeHoursAgo),
+          }
+        ],
+      },
     ];
   }, [formatTimestamp, formatFullTimestamp]);
 
@@ -235,12 +290,13 @@ const usePosts = () => {
   }, [posts, loading]);
 
   // Função para criar um novo post
-  const createPost = (content, author) => {
+  const createPost = (content, author, photos = null) => {
     const now = new Date();
     const newPost = {
       id: Date.now(),
       author: author,
       content: content,
+      photos: photos, // Array de fotos se for um post com fotos
       timestamp: formatTimestamp(now),
       createdAt: now.toISOString(), // Salva data/hora exata
       fullTimestamp: formatFullTimestamp(now), // Formato completo para exibição
@@ -252,6 +308,17 @@ const usePosts = () => {
 
     setPosts(prevPosts => [newPost, ...prevPosts]);
     return newPost;
+  };
+
+  // Função para criar um post com fotos
+  const createPhotoPost = (photoData) => {
+    const { photos, caption, album, author } = photoData;
+    const content = caption || `Novas fotos no álbum "${album}"`;
+    
+    return createPost(content, author, {
+      images: photos,
+      album: album
+    });
   };
 
   // Função para curtir/descurtir um post
@@ -362,6 +429,7 @@ const usePosts = () => {
     posts,
     loading,
     createPost,
+    createPhotoPost,
     toggleLike,
     deletePost,
     addComment,

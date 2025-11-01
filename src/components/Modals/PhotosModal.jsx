@@ -1,49 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, Upload, Heart, MessageCircle, Calendar } from 'lucide-react';
+import usePhotos from '../../hooks/usePhotos';
+import AddPhotoModal from './AddPhotoModal';
 
 const PhotosModal = ({ user, onClose }) => {
   const [selectedAlbum, setSelectedAlbum] = useState('all');
-  
-  // Fotos de demonstração
-  const photos = [
-    {
-      id: 1,
-      url: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop',
-      album: 'perfil',
-      caption: 'Nova foto de perfil! 📸',
-      likes: 12,
-      comments: 3,
-      date: '2024-01-15'
-    },
-    {
-      id: 2,
-      url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&h=300&fit=crop',
-      album: 'viagem',
-      caption: 'Viagem incrível para a praia! 🏖️',
-      likes: 25,
-      comments: 8,
-      date: '2024-01-10'
-    },
-    {
-      id: 3,
-      url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop',
-      album: 'amigos',
-      caption: 'Encontro com a galera do trabalho 👥',
-      likes: 18,
-      comments: 5,
-      date: '2024-01-05'
-    },
-    {
-      id: 4,
-      url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=300&fit=crop',
-      album: 'familia',
-      caption: 'Almoço em família ❤️',
-      likes: 30,
-      comments: 12,
-      date: '2023-12-25'
-    }
-  ];
+  const [showAddPhotoModal, setShowAddPhotoModal] = useState(false);
+  const { photos, loading, syncPhotosFromPosts, togglePhotoLike, addPhotos } = usePhotos();
+
+  // Sincronizar fotos dos posts quando o modal abrir
+  useEffect(() => {
+    syncPhotosFromPosts();
+  }, [syncPhotosFromPosts]);
 
   const albums = [
     { id: 'all', name: 'Todas as fotos', count: photos.length },
@@ -56,6 +25,38 @@ const PhotosModal = ({ user, onClose }) => {
   const filteredPhotos = selectedAlbum === 'all' 
     ? photos 
     : photos.filter(photo => photo.album === selectedAlbum);
+
+  const handlePhotoLike = (photoId) => {
+    togglePhotoLike(photoId, user.email);
+  };
+
+  const handleAddPhoto = (photoData) => {
+    // Adicionar as fotos ao álbum
+    addPhotos(photoData);
+    setShowAddPhotoModal(false);
+    
+    // Sincronizar novamente para atualizar a lista
+    setTimeout(() => {
+      syncPhotosFromPosts();
+    }, 100);
+  };
+
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      >
+        <div className="bg-white rounded-xl p-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-6 h-6 border-2 border-orkut-pink border-t-transparent rounded-full animate-spin"></div>
+            <span>Carregando fotos...</span>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -84,7 +85,10 @@ const PhotosModal = ({ user, onClose }) => {
           {/* Albums Sidebar */}
           <div className="w-64 bg-gray-50 p-4 border-r border-gray-200">
             <div className="mb-4">
-              <button className="w-full orkut-button flex items-center justify-center space-x-2">
+              <button 
+                onClick={() => setShowAddPhotoModal(true)}
+                className="w-full orkut-button flex items-center justify-center space-x-2"
+              >
                 <Upload size={16} />
                 <span>Adicionar Fotos</span>
               </button>
@@ -135,10 +139,20 @@ const PhotosModal = ({ user, onClose }) => {
                       
                       <div className="flex items-center justify-between text-xs text-gray-500">
                         <div className="flex items-center space-x-3">
-                          <div className="flex items-center space-x-1">
-                            <Heart size={12} />
+                          <button
+                            onClick={() => handlePhotoLike(photo.id)}
+                            className={`flex items-center space-x-1 transition-colors duration-200 ${
+                              photo.likedBy?.includes(user.email)
+                                ? 'text-orkut-pink'
+                                : 'hover:text-orkut-pink'
+                            }`}
+                          >
+                            <Heart 
+                              size={12} 
+                              fill={photo.likedBy?.includes(user.email) ? 'currentColor' : 'none'}
+                            />
                             <span>{photo.likes}</span>
-                          </div>
+                          </button>
                           <div className="flex items-center space-x-1">
                             <MessageCircle size={12} />
                             <span>{photo.comments}</span>
@@ -164,6 +178,15 @@ const PhotosModal = ({ user, onClose }) => {
           </div>
         </div>
       </motion.div>
+
+      {/* Add Photo Modal */}
+      {showAddPhotoModal && (
+        <AddPhotoModal
+          user={user}
+          onClose={() => setShowAddPhotoModal(false)}
+          onAddPhoto={handleAddPhoto}
+        />
+      )}
     </motion.div>
   );
 };

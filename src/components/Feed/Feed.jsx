@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, MessageCircle, Share2, Send, Trash2 } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Send, Trash2, Camera } from 'lucide-react';
 import usePosts from '../../hooks/usePosts';
+import usePhotos from '../../hooks/usePhotos';
+import AddPhotoModal from '../Modals/AddPhotoModal';
 
 const Feed = ({ user }) => {
-  const { posts, loading, createPost, toggleLike, deletePost, addComment, deleteComment } = usePosts();
+  const { posts, loading, createPost, createPhotoPost, toggleLike, deletePost, addComment, deleteComment } = usePosts();
+  const { addPhotos } = usePhotos();
   const [newPost, setNewPost] = useState('');
   const [showComments, setShowComments] = useState({});
   const [newComment, setNewComment] = useState({});
   const [showFullTimestamp, setShowFullTimestamp] = useState({});
+  const [showAddPhotoModal, setShowAddPhotoModal] = useState(false);
 
   const handleSubmitPost = (e) => {
     e.preventDefault();
@@ -69,6 +73,16 @@ const Feed = ({ user }) => {
     }));
   };
 
+  const handleAddPhoto = (photoData) => {
+    // Criar o post com fotos
+    createPhotoPost(photoData);
+    
+    // Adicionar as fotos ao álbum de fotos
+    addPhotos(photoData);
+    
+    setShowAddPhotoModal(false);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-8">
@@ -113,7 +127,16 @@ const Feed = ({ user }) => {
             className="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-orkut-pink focus:border-orkut-pink transition-all duration-200"
             rows="3"
           />
-          <div className="flex justify-end mt-3">
+          <div className="flex justify-between items-center mt-3">
+            <button
+              type="button"
+              onClick={() => setShowAddPhotoModal(true)}
+              className="flex items-center space-x-2 px-4 py-2 text-orkut-pink border border-orkut-pink rounded-lg hover:bg-orkut-pink hover:text-white transition-colors duration-200"
+            >
+              <Camera size={16} />
+              <span>Adicionar Fotos</span>
+            </button>
+            
             <button
               type="submit"
               disabled={!newPost.trim()}
@@ -186,6 +209,51 @@ const Feed = ({ user }) => {
 
             {/* Post Content */}
             <p className="text-gray-700 mb-4 leading-relaxed">{post.content}</p>
+
+            {/* Photos Grid */}
+            {post.photos && post.photos.images && post.photos.images.length > 0 && (
+              <div className="mb-4">
+                <div className={`grid gap-2 ${
+                  post.photos.images.length === 1 
+                    ? 'grid-cols-1' 
+                    : post.photos.images.length === 2 
+                    ? 'grid-cols-2' 
+                    : post.photos.images.length === 3
+                    ? 'grid-cols-3'
+                    : 'grid-cols-2'
+                }`}>
+                  {post.photos.images.slice(0, 4).map((photo, index) => (
+                    <div 
+                      key={index} 
+                      className={`relative overflow-hidden rounded-lg ${
+                        post.photos.images.length === 1 
+                          ? 'aspect-video' 
+                          : 'aspect-square'
+                      }`}
+                    >
+                      <img
+                        src={photo.url}
+                        alt={`Foto ${index + 1}`}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-200 cursor-pointer"
+                      />
+                      {/* Overlay para mais fotos */}
+                      {index === 3 && post.photos.images.length > 4 && (
+                        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                          <span className="text-white font-bold text-lg">
+                            +{post.photos.images.length - 4}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {post.photos.album && (
+                  <p className="text-sm text-gray-500 mt-2">
+                    📁 Álbum: {post.photos.album.charAt(0).toUpperCase() + post.photos.album.slice(1)}
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* Post Actions */}
             <div className="flex items-center space-x-6 pt-4 border-t border-gray-100">
@@ -337,6 +405,15 @@ const Feed = ({ user }) => {
           </motion.div>
         ))}
       </div>
+
+      {/* Add Photo Modal */}
+      {showAddPhotoModal && (
+        <AddPhotoModal
+          user={user}
+          onClose={() => setShowAddPhotoModal(false)}
+          onAddPhoto={handleAddPhoto}
+        />
+      )}
     </div>
   );
 };

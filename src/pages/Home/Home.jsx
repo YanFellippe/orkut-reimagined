@@ -8,12 +8,16 @@ import ProfileSidebar from '../../components/ProfileSidebar/ProfileSidebar';
 import FriendsCommunities from '../../components/FriendsCommunities/FriendsCommunitiesSidebar';
 import Feed from '../../components/Feed/Feed';
 import useAuth from '../../hooks/useAuth';
+import usePhotoSync from '../../hooks/usePhotoSync';
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const { user, logout, loading } = useAuth();
   const navigate = useNavigate();
+  
+  // Sincronizar fotos automaticamente
+  usePhotoSync();
 
   // Sincronizar o usuário atual com o hook de auth
   useEffect(() => {
