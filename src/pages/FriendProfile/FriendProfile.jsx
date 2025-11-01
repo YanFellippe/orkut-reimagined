@@ -17,7 +17,7 @@ const FriendProfile = () => {
     name: 'Priscilaaaa',
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop',
     coverImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=300&fit=crop',
-    bio: 'Apaixonada por música, arte e viagens! Sempre em busca de novas aventuras 🌟✨',
+    bio: 'Apaixonada por música, arte e viagens! Sempre em busca de novas aventuras',
     location: 'São Paulo, SP',
     age: 25,
     relationship: 'solteira',
@@ -47,14 +47,14 @@ const FriendProfile = () => {
     switch (relationship) {
       case 'solteiro':
       case 'solteira':
-        return '💙';
+        return <Heart size={16} className="text-blue-500" />;
       case 'namorando':
-        return '💕';
+        return <Heart size={16} className="text-pink-500" />;
       case 'casado':
       case 'casada':
-        return '💍';
+        return <Heart size={16} className="text-red-500" />;
       default:
-        return '❤️';
+        return <Heart size={16} className="text-red-500" />;
     }
   };
 

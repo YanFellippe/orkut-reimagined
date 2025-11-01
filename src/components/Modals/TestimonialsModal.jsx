@@ -8,7 +8,7 @@ const TestimonialsModal = ({ user, onClose }) => {
     {
       id: 1,
       author: 'Ana Costa',
-      content: 'Uma pessoa incrível! Sempre disposta a ajudar e com um coração gigante. Tenho muito orgulho de ter você como amiga! ❤️',
+      content: 'Uma pessoa incrível! Sempre disposta a ajudar e com um coração gigante. Tenho muito orgulho de ter você como amiga!',
       rating: 5,
       date: '2024-01-15',
       likes: 8
@@ -16,7 +16,7 @@ const TestimonialsModal = ({ user, onClose }) => {
     {
       id: 2,
       author: 'João Santos',
-      content: 'Profissional exemplar e pessoa ainda melhor! Trabalhar com você foi uma das melhores experiências da minha carreira. Sucesso sempre! 🚀',
+      content: 'Profissional exemplar e pessoa ainda melhor! Trabalhar com você foi uma das melhores experiências da minha carreira. Sucesso sempre!',
       rating: 5,
       date: '2024-01-10',
       likes: 12
@@ -24,7 +24,7 @@ const TestimonialsModal = ({ user, onClose }) => {
     {
       id: 3,
       author: 'Maria Silva',
-      content: 'Amiga de todas as horas! Sempre presente nos momentos bons e ruins. Você é especial e merece todo o carinho do mundo! 🌟',
+      content: 'Amiga de todas as horas! Sempre presente nos momentos bons e ruins. Você é especial e merece todo o carinho do mundo!',
       rating: 5,
       date: '2024-01-05',
       likes: 15

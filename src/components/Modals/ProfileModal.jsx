@@ -1,8 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { X, MapPin, Calendar, Heart, Users } from 'lucide-react';
+import { 
+  X, 
+  MapPin, 
+  Calendar, 
+  Heart, 
+  Users, 
+  FileText, 
+  Image, 
+  MessageSquare,
+  User,
+  BarChart3,
+  Building2
+} from 'lucide-react';
 
 const ProfileModal = ({ user, onClose }) => {
+  const [stats, setStats] = useState({
+    totalPosts: 0,
+    totalImages: 0,
+    totalLikes: 0,
+    totalComments: 0
+  });
+
+  // Calcular estatísticas
+  useEffect(() => {
+    const calculateStats = () => {
+      // Buscar posts do localStorage
+      const posts = JSON.parse(localStorage.getItem('orkutPosts') || '[]');
+      
+      // Buscar usuários para pegar o nome do usuário atual
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const currentUser = users.find(u => u.email === user.email);
+      
+      if (!currentUser) {
+        return;
+      }
+
+      // Filtrar posts do usuário atual
+      const userPosts = posts.filter(post => post.author === currentUser.name);
+      
+      // Calcular estatísticas
+      const totalPosts = userPosts.length;
+      
+      // Calcular total de imagens dos posts
+      let totalImages = 0;
+      userPosts.forEach(post => {
+        if (post.photos && post.photos.images) {
+          totalImages += post.photos.images.length;
+        }
+      });
+      
+      // Calcular total de curtidas recebidas
+      const totalLikes = userPosts.reduce((sum, post) => sum + (post.likes || 0), 0);
+      
+      // Calcular total de comentários recebidos
+      const totalComments = userPosts.reduce((sum, post) => {
+        return sum + (post.commentsList ? post.commentsList.length : 0);
+      }, 0);
+
+      setStats({
+        totalPosts,
+        totalImages,
+        totalLikes,
+        totalComments
+      });
+    };
+
+    calculateStats();
+
+    // Recalcular quando houver mudanças
+    const interval = setInterval(calculateStats, 2000);
+    return () => clearInterval(interval);
+  }, [user.email]);
+  
   const getInitials = (name) => {
     return name
       .split(' ')
@@ -12,10 +82,8 @@ const ProfileModal = ({ user, onClose }) => {
       .slice(0, 2);
   };
 
-  const getGenderIcon = (gender) => {
-    if (gender === 'masculino') return '♂️';
-    if (gender === 'feminino') return '♀️';
-    return '👤';
+  const getGenderIcon = () => {
+    return <User size={16} className="text-blue-500" />;
   };
 
   return (
@@ -70,7 +138,7 @@ const ProfileModal = ({ user, onClose }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">
-                    <span className="text-lg">{getGenderIcon(user.profile?.gender)}</span>
+                    {getGenderIcon()}
                     <span className="text-gray-700">
                       {user.profile?.gender || 'Não informado'}
                     </span>
@@ -125,16 +193,101 @@ const ProfileModal = ({ user, onClose }) => {
 
               {/* Stats */}
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-semibold text-gray-800 mb-3">Estatísticas</h4>
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-orkut-pink">156</div>
-                    <div className="text-sm text-gray-600">Amigos</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-orkut-pink">23</div>
-                    <div className="text-sm text-gray-600">Comunidades</div>
-                  </div>
+                <div className="flex items-center justify-center space-x-2 mb-3">
+                  <BarChart3 size={18} className="text-gray-700" />
+                  <h4 className="font-semibold text-gray-800">Estatísticas</h4>
+                </div>
+                
+                {/* Estatísticas dinâmicas */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  <motion.div 
+                    className="text-center p-3 bg-gradient-to-br from-orkut-pink to-pink-500 text-white rounded-lg shadow-sm"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <FileText size={16} />
+                    </div>
+                    <div className="text-xl font-bold">{stats.totalPosts}</div>
+                    <div className="text-xs opacity-90">
+                      {stats.totalPosts === 1 ? 'Postagem' : 'Postagens'}
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center p-3 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg shadow-sm"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <Image size={16} />
+                    </div>
+                    <div className="text-xl font-bold">{stats.totalImages}</div>
+                    <div className="text-xs opacity-90">
+                      {stats.totalImages === 1 ? 'Imagem' : 'Imagens'}
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center p-3 bg-gradient-to-br from-red-500 to-pink-500 text-white rounded-lg shadow-sm"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <Heart size={16} />
+                    </div>
+                    <div className="text-xl font-bold">{stats.totalLikes}</div>
+                    <div className="text-xs opacity-90">
+                      {stats.totalLikes === 1 ? 'Curtida' : 'Curtidas'}
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center p-3 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg shadow-sm"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <MessageSquare size={16} />
+                    </div>
+                    <div className="text-xl font-bold">{stats.totalComments}</div>
+                    <div className="text-xs opacity-90">
+                      {stats.totalComments === 1 ? 'Comentário' : 'Comentários'}
+                    </div>
+                  </motion.div>
+                </div>
+                
+                {/* Estatísticas fixas do Orkut */}
+                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-gray-200">
+                  <motion.div 
+                    className="text-center p-3 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg shadow-sm"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <Users size={16} />
+                    </div>
+                    <div className="text-xl font-bold">156</div>
+                    <div className="text-xs opacity-90">Amigos</div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="text-center p-3 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-lg shadow-sm"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <div className="flex items-center justify-center mb-1">
+                      <Building2 size={16} />
+                    </div>
+                    <div className="text-xl font-bold">23</div>
+                    <div className="text-xs opacity-90">Comunidades</div>
+                  </motion.div>
                 </div>
               </div>
             </div>

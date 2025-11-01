@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Users, MessageCircle, UserPlus } from 'lucide-react';
+import { MapPin, Users, MessageCircle, UserPlus, Heart } from 'lucide-react';
 
 const FriendPreviewModal = ({ friend, position, onClose }) => {
   const getInitials = (name) => {
@@ -16,14 +16,14 @@ const FriendPreviewModal = ({ friend, position, onClose }) => {
     switch (relationship) {
       case 'solteiro':
       case 'solteira':
-        return '💙';
+        return <Heart size={16} className="text-blue-500" />;
       case 'namorando':
-        return '💕';
+        return <Heart size={16} className="text-pink-500" />;
       case 'casado':
       case 'casada':
-        return '💍';
+        return <Heart size={16} className="text-red-500" />;
       default:
-        return '❤️';
+        return <Heart size={16} className="text-red-500" />;
     }
   };
 

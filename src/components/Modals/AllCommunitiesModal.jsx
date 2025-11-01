@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { X, Globe, Users, Crown, Lock } from 'lucide-react';
 
 const AllCommunitiesModal = ({ communities, onClose }) => {
+  const navigate = useNavigate();
+  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <motion.div
@@ -35,7 +38,10 @@ const AllCommunitiesModal = ({ communities, onClose }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
                 className="bg-gray-50 rounded-lg overflow-hidden hover:bg-gray-100 transition-colors cursor-pointer"
-                onClick={() => window.location.href = `/community/${community.id}`}
+                onClick={() => {
+                  onClose();
+                  navigate(`/community/${community.id}`);
+                }}
               >
                 {/* Cover Image */}
                 <div className="h-20 bg-gradient-to-r from-orkut-pink to-purple-500 relative overflow-hidden">

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, Users, Crown, Lock, Globe, UserPlus, MessageCircle, 
-  Eye, Calendar, TrendingUp, Image, Video, FileText, Settings 
+  Eye, Calendar, TrendingUp, Image, Video, FileText, Settings, Megaphone, Clock, Frown 
 } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -267,11 +267,14 @@ const CommunityProfile = () => {
                               <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">FIXADO</span>
                             </div>
                             <p className="text-gray-700 mb-2">
-                              <strong>📢 REGRAS DA COMUNIDADE:</strong><br/>
+                              <strong className="flex items-center space-x-1">
+                                <Megaphone size={16} className="text-blue-500" />
+                                <span>REGRAS DA COMUNIDADE:</span>
+                              </strong><br/>
                               1. Respeite todos os membros<br/>
                               2. Compartilhe suas experiências com recreios curtos<br/>
                               3. Proibido spam ou conteúdo ofensivo<br/>
-                              4. Vamos lutar juntos por recreios mais longos! ⏰
+                              4. Vamos lutar juntos por recreios mais longos!
                             </p>
                             <div className="flex items-center space-x-4 text-sm text-gray-500">
                               <span>89 curtidas</span>
@@ -419,11 +422,17 @@ const CommunityProfile = () => {
                   transition={{ delay: 0.5 }}
                   className="orkut-card p-4 mb-6"
                 >
-                  <h3 className="font-bold text-gray-800 mb-3">⏰ Cronômetro do Recreio</h3>
+                  <h3 className="font-bold text-gray-800 mb-3 flex items-center space-x-2">
+                    <Clock size={18} className="text-blue-500" />
+                    <span>Cronômetro do Recreio</span>
+                  </h3>
                   <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
                     <div className="text-2xl font-bold text-red-600 mb-1">15:00</div>
                     <div className="text-sm text-red-700">Tempo médio de recreio</div>
-                    <div className="text-xs text-red-600 mt-2">😤 Muito pouco!</div>
+                    <div className="text-xs text-red-600 mt-2 flex items-center justify-center space-x-1">
+                      <Frown size={14} />
+                      <span>Muito pouco!</span>
+                    </div>
                   </div>
                   <div className="mt-3 space-y-2">
                     <div className="flex justify-between text-sm">
@@ -480,7 +489,7 @@ const CommunityProfile = () => {
                   {communityId === '19' && (
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm">⏰</span>
+                        <Clock size={14} className="text-orange-500" />
                         <span className="text-sm text-gray-600">Reclamações hoje</span>
                       </div>
                       <span className="text-sm font-semibold text-red-600">127</span>

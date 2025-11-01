@@ -8,7 +8,7 @@ const MessagesModal = ({ user, onClose }) => {
     {
       id: 1,
       author: 'Ana Costa',
-      content: 'Oi! Como você está? Saudades dos tempos de orkut! 💖',
+      content: 'Oi! Como você está? Saudades dos tempos de orkut!',
       timestamp: '2 horas atrás',
       likes: 3
     },
@@ -22,7 +22,7 @@ const MessagesModal = ({ user, onClose }) => {
     {
       id: 3,
       author: 'Maria Silva',
-      content: 'Parabéns pelo novo emprego! Você merece muito! 🎉',
+      content: 'Parabéns pelo novo emprego! Você merece muito!',
       timestamp: '3 dias atrás',
       likes: 8
     }

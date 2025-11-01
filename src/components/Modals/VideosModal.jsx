@@ -7,7 +7,7 @@ const VideosModal = ({ user, onClose }) => {
   const videos = [
     {
       id: 1,
-      title: 'Viagem para a praia 🏖️',
+      title: 'Viagem para a praia',
       thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=200&fit=crop',
       duration: '2:34',
       likes: 15,
@@ -17,7 +17,7 @@ const VideosModal = ({ user, onClose }) => {
     },
     {
       id: 2,
-      title: 'Aniversário da família 🎂',
+      title: 'Aniversário da família',
       thumbnail: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=300&h=200&fit=crop',
       duration: '1:45',
       likes: 28,
@@ -27,7 +27,7 @@ const VideosModal = ({ user, onClose }) => {
     },
     {
       id: 3,
-      title: 'Show da banda favorita 🎵',
+      title: 'Show da banda favorita',
       thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=200&fit=crop',
       duration: '4:12',
       likes: 42,

@@ -5,6 +5,7 @@ import useAuth from '../../hooks/useAuth';
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
+  // Mostrar loading enquanto verifica autenticação
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -16,7 +17,13 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  return user ? children : <Navigate to="/login" replace />;
+  // Se não há usuário autenticado, redirecionar para login
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Se há usuário autenticado, mostrar o conteúdo
+  return children;
 };
 
 export default ProtectedRoute;

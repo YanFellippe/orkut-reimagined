@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Star, Camera, Users } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import LoginForm from '../../components/Login/LoginForm';
@@ -56,9 +57,18 @@ const LandingPage = () => {
                 faça novas conexões em um ambiente nostálgico e familiar.
               </p>
               <div className="flex justify-center space-x-6 text-sm text-gray-500">
-                <span>✨ Depoimentos</span>
-                <span>📸 Álbuns de fotos</span>
-                <span>👥 Comunidades</span>
+                <span className="flex items-center space-x-1">
+                  <Star size={14} />
+                  <span>Depoimentos</span>
+                </span>
+                <span className="flex items-center space-x-1">
+                  <Camera size={14} />
+                  <span>Álbuns de fotos</span>
+                </span>
+                <span className="flex items-center space-x-1">
+                  <Users size={14} />
+                  <span>Comunidades</span>
+                </span>
               </div>
             </div>
           </motion.div>

@@ -10,7 +10,7 @@ export const seedDemoData = () => {
         email: 'maria@email.com',
         password: '123456',
         profile: {
-          bio: 'Apaixonada por música e arte! 🎨✨',
+          bio: 'Apaixonada por música e arte!',
           gender: 'feminino',
           relationship: 'solteira',
           location: 'São Paulo, Brasil',
@@ -38,7 +38,7 @@ export const seedDemoData = () => {
         email: 'ana@email.com',
         password: '123456',
         profile: {
-          bio: 'Professora e mãe orgulhosa! 👩‍🏫❤️',
+          bio: 'Professora e mãe orgulhosa!',
           gender: 'feminino',
           relationship: 'casada',
           location: 'Belo Horizonte, Brasil',

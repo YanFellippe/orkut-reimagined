@@ -31,9 +31,7 @@ const ProfileSidebar = ({ user, onUserUpdate }) => {
   };
 
   const getGenderIcon = (gender) => {
-    if (gender === 'masculino') return '♂️';
-    if (gender === 'feminino') return '♀️';
-    return '👤';
+    return <User size={14} className="text-gray-400" />;
   };
 
   const getRelationshipText = (relationship) => {

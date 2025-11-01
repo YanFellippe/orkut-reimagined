@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { X, Users, MapPin } from 'lucide-react';
 
 const AllFriendsModal = ({ friends, onClose }) => {
+  const navigate = useNavigate();
+  
   const getInitials = (name) => {
     return name
       .split(' ')
@@ -44,7 +47,10 @@ const AllFriendsModal = ({ friends, onClose }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
                 className="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition-colors cursor-pointer"
-                onClick={() => window.location.href = `/friend/${friend.id}`}
+                onClick={() => {
+                  onClose();
+                  navigate(`/friend/${friend.id}`);
+                }}
               >
                 <div className="text-center">
                   <div className="relative mb-2 mx-auto w-16 h-16">

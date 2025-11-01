@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Users, Globe } from 'lucide-react';
 import FriendPreviewModal from '../Modals/FriendPreviewModal';
 import CommunityPreviewModal from '../Modals/CommunityPreviewModal';
@@ -8,6 +9,7 @@ import AllCommunitiesModal from '../Modals/AllCommunitiesModal';
 import { demoFriends, demoCommunities } from '../../utils/demoData';
 
 const FriendsCommunitiesSidebar = ({ user }) => {
+  const navigate = useNavigate();
   const [hoveredFriend, setHoveredFriend] = useState(null);
   const [hoveredCommunity, setHoveredCommunity] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
@@ -150,7 +152,7 @@ const FriendsCommunitiesSidebar = ({ user }) => {
               onMouseEnter={(e) => handleMouseEnter('friend', friend, e)}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              onClick={() => window.location.href = `/friend/${friend.id}`}
+              onClick={() => navigate(`/friend/${friend.id}`)}
             >
               <div className="relative mb-2">
                 <div className="w-12 h-12 mx-auto rounded-lg overflow-hidden bg-gray-200 group-hover:ring-2 group-hover:ring-orkut-pink transition-all duration-200">
@@ -217,7 +219,7 @@ const FriendsCommunitiesSidebar = ({ user }) => {
               onMouseEnter={(e) => handleMouseEnter('community', community, e)}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              onClick={() => window.location.href = `/community/${community.id}`}
+              onClick={() => navigate(`/community/${community.id}`)}
             >
               <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0 group-hover:ring-2 group-hover:ring-orkut-pink transition-all duration-200">
                 <img

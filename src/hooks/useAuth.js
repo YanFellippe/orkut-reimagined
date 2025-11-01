@@ -6,9 +6,15 @@ const useAuth = () => {
 
   useEffect(() => {
     // Verificar se há usuário ativo no localStorage
-    const activeUser = localStorage.getItem('activeUser');
-    if (activeUser) {
-      setUser(JSON.parse(activeUser));
+    try {
+      const activeUser = localStorage.getItem('activeUser');
+      if (activeUser) {
+        const parsedUser = JSON.parse(activeUser);
+        setUser(parsedUser);
+      }
+    } catch (error) {
+      console.error('Erro ao carregar usuário:', error);
+      localStorage.removeItem('activeUser');
     }
     setLoading(false);
   }, []);

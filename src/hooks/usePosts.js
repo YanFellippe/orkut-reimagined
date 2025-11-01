@@ -51,7 +51,7 @@ const usePosts = () => {
       {
         id: 1,
         author: 'Maria Silva',
-        content: 'Que saudade do orkut! Finalmente de volta! 💖',
+        content: 'Que saudade do orkut! Finalmente de volta!',
         timestamp: formatTimestamp(twoHoursAgo),
         createdAt: twoHoursAgo.toISOString(),
         fullTimestamp: formatFullTimestamp(twoHoursAgo),
@@ -96,7 +96,7 @@ const usePosts = () => {
           {
             id: 4,
             author: 'Carla Mendes',
-            content: 'Os depoimentos eram tudo! ❤️',
+            content: 'Os depoimentos eram tudo!',
             timestamp: formatTimestamp(fifteenMinAgo),
             createdAt: fifteenMinAgo.toISOString(),
             fullTimestamp: formatFullTimestamp(fifteenMinAgo),
@@ -134,7 +134,7 @@ const usePosts = () => {
           {
             id: 2,
             author: 'Ana Costa',
-            content: '"Eu amo dormir até tarde" também era boa! 😴',
+            content: '"Eu amo dormir até tarde" também era boa!',
             timestamp: formatTimestamp(twoAndHalfHoursAgo),
             createdAt: twoAndHalfHoursAgo.toISOString(),
             fullTimestamp: formatFullTimestamp(twoAndHalfHoursAgo),
@@ -150,7 +150,7 @@ const usePosts = () => {
           {
             id: 4,
             author: 'Juliana Rocha',
-            content: 'As comunidades de fãs de bandas eram as melhores! 🎵',
+            content: 'As comunidades de fãs de bandas eram as melhores!',
             timestamp: formatTimestamp(thirtyMinAgo),
             createdAt: thirtyMinAgo.toISOString(),
             fullTimestamp: formatFullTimestamp(thirtyMinAgo),
@@ -161,7 +161,7 @@ const usePosts = () => {
         id: 3,
         author: 'Ana Costa',
         content:
-          'Quem mais sente falta dos scraps? Era muito mais divertido que os stories de hoje! 📝✨',
+          'Quem mais sente falta dos scraps? Era muito mais divertido que os stories de hoje!',
         timestamp: formatTimestamp(sixHoursAgo),
         createdAt: sixHoursAgo.toISOString(),
         fullTimestamp: formatFullTimestamp(sixHoursAgo),
@@ -188,7 +188,7 @@ const usePosts = () => {
           {
             id: 3,
             author: 'Diego Martins',
-            content: 'E as imagens animadas? Era uma arte! ✨',
+            content: 'E as imagens animadas? Era uma arte!',
             timestamp: formatTimestamp(threeHoursAgo),
             createdAt: threeHoursAgo.toISOString(),
             fullTimestamp: formatFullTimestamp(threeHoursAgo),
@@ -204,7 +204,7 @@ const usePosts = () => {
           {
             id: 5,
             author: 'Gabriel Silva',
-            content: 'Os scraps de aniversário eram tradição! 🎂',
+            content: 'Os scraps de aniversário eram tradição!',
             timestamp: formatTimestamp(oneHourAgo),
             createdAt: oneHourAgo.toISOString(),
             fullTimestamp: formatFullTimestamp(oneHourAgo),
@@ -223,7 +223,7 @@ const usePosts = () => {
       {
         id: 4,
         author: 'Pedro Oliveira',
-        content: 'Viagem incrível para a praia com os amigos! 🏖️☀️',
+        content: 'Viagem incrível para a praia com os amigos!',
         timestamp: formatTimestamp(fiveHoursAgo),
         createdAt: fiveHoursAgo.toISOString(),
         fullTimestamp: formatFullTimestamp(fiveHoursAgo),
