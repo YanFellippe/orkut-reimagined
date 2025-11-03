@@ -4,14 +4,22 @@ import { User, MessageCircle, Users, Globe, Settings, LogOut } from 'lucide-reac
 import ProfileCard from '../ProfileCard/ProfileCard';
 import AllFriendsModal from '../Modals/AllFriendsModal';
 import AllCommunitiesModal from '../Modals/AllCommunitiesModal';
+import ProfileModal from '../Modals/ProfileModal';
+import MessagesModal from '../Modals/MessagesModal';
 import { demoFriends, demoCommunities } from '../../utils/demoData';
 
 const Sidebar = ({ user, onLogout, isOpen, onToggle }) => {
   const [showAllFriends, setShowAllFriends] = useState(false);
   const [showAllCommunities, setShowAllCommunities] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showMessagesModal, setShowMessagesModal] = useState(false);
 
   const handleMenuClick = (label) => {
-    if (label === 'Amigos') {
+    if (label === 'Perfil') {
+      setShowProfileModal(true);
+    } else if (label === 'Recados') {
+      setShowMessagesModal(true);
+    } else if (label === 'Amigos') {
       setShowAllFriends(true);
     } else if (label === 'Comunidades') {
       setShowAllCommunities(true);
@@ -95,6 +103,20 @@ const Sidebar = ({ user, onLogout, isOpen, onToggle }) => {
       </motion.aside>
 
       {/* Modals */}
+      {showProfileModal && (
+        <ProfileModal
+          user={user}
+          onClose={() => setShowProfileModal(false)}
+        />
+      )}
+
+      {showMessagesModal && (
+        <MessagesModal
+          user={user}
+          onClose={() => setShowMessagesModal(false)}
+        />
+      )}
+
       {showAllFriends && (
         <AllFriendsModal
           friends={demoFriends}
