@@ -50,7 +50,48 @@ export const demoFriends = [
   { id: 47, name: 'Priscila Duarte', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop', mutualFriends: 412, isOnline: true, location: 'Natal, RN', relationship: 'casada' },
   { id: 48, name: 'Ricardo Moura', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop', mutualFriends: 189, isOnline: false, location: 'Cuiabá, MT', relationship: 'solteiro' },
   { id: 49, name: 'Sabrina Correia', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop', mutualFriends: 334, isOnline: true, location: 'Palmas, TO', relationship: 'solteira' },
-  { id: 50, name: 'Tiago Ramos', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop', mutualFriends: 278, isOnline: false, location: 'Boa Vista, RR', relationship: 'namorando' }
+  { id: 50, name: 'Tiago Ramos', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop', mutualFriends: 278, isOnline: false, location: 'Boa Vista, RR', relationship: 'namorando' },
+  
+  // Novos perfis para sugestões de amigos
+  { id: 51, name: 'Sofia Mendes', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop', mutualFriends: 89, isOnline: true, location: 'São Paulo, SP', relationship: 'solteira' },
+  { id: 52, name: 'Pedro Henrique', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop', mutualFriends: 156, isOnline: false, location: 'Rio de Janeiro, RJ', relationship: 'solteiro' },
+  { id: 53, name: 'Beatriz Santos', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop', mutualFriends: 234, isOnline: true, location: 'Belo Horizonte, MG', relationship: 'namorando' },
+  { id: 54, name: 'Gabriel Costa', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop', mutualFriends: 67, isOnline: false, location: 'Salvador, BA', relationship: 'casado' },
+  { id: 55, name: 'Valentina Lima', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop', mutualFriends: 123, isOnline: true, location: 'Fortaleza, CE', relationship: 'solteira' },
+  { id: 56, name: 'Arthur Silva', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop', mutualFriends: 98, isOnline: false, location: 'Curitiba, PR', relationship: 'solteiro' },
+  { id: 57, name: 'Helena Rocha', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop', mutualFriends: 178, isOnline: true, location: 'Porto Alegre, RS', relationship: 'namorando' },
+  { id: 58, name: 'Lorenzo Alves', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop', mutualFriends: 145, isOnline: false, location: 'Recife, PE', relationship: 'solteiro' },
+  { id: 59, name: 'Alice Ferreira', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop', mutualFriends: 201, isOnline: true, location: 'Goiânia, GO', relationship: 'solteira' },
+  { id: 60, name: 'Enzo Martins', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop', mutualFriends: 87, isOnline: false, location: 'Manaus, AM', relationship: 'namorando' },
+  { id: 61, name: 'Luna Oliveira', avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop', mutualFriends: 167, isOnline: true, location: 'Belém, PA', relationship: 'casada' },
+  { id: 62, name: 'Davi Pereira', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop', mutualFriends: 134, isOnline: false, location: 'Vitória, ES', relationship: 'solteiro' },
+  { id: 63, name: 'Manuela Castro', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop', mutualFriends: 189, isOnline: true, location: 'Florianópolis, SC', relationship: 'solteira' },
+  { id: 64, name: 'Benjamin Souza', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&h=100&fit=crop', mutualFriends: 112, isOnline: false, location: 'Campo Grande, MS', relationship: 'namorando' },
+  { id: 65, name: 'Antonella Dias', avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&h=100&fit=crop', mutualFriends: 223, isOnline: true, location: 'João Pessoa, PB', relationship: 'solteira' }
+];
+
+// Perfis exclusivos para sugestões de amigos (não são amigos inicialmente)
+export const friendSuggestions = [
+  { id: 101, name: 'Marina Oliveira', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop', mutualFriends: 23, isOnline: true, location: 'São Paulo, SP', relationship: 'solteira', bio: 'Amo viajar e conhecer pessoas novas!' },
+  { id: 102, name: 'Carlos Eduardo', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop', mutualFriends: 18, isOnline: false, location: 'Rio de Janeiro, RJ', relationship: 'solteiro', bio: 'Desenvolvedor apaixonado por tecnologia' },
+  { id: 103, name: 'Isabela Costa', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop', mutualFriends: 31, isOnline: true, location: 'Belo Horizonte, MG', relationship: 'namorando', bio: 'Designer gráfica e amante da arte' },
+  { id: 104, name: 'Roberto Silva', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop', mutualFriends: 15, isOnline: false, location: 'Salvador, BA', relationship: 'casado', bio: 'Professor de história e músico nas horas vagas' },
+  { id: 105, name: 'Camila Ferreira', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop', mutualFriends: 27, isOnline: true, location: 'Fortaleza, CE', relationship: 'solteira', bio: 'Estudante de medicina e voluntária' },
+  { id: 106, name: 'André Santos', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop', mutualFriends: 12, isOnline: false, location: 'Curitiba, PR', relationship: 'solteiro', bio: 'Engenheiro e gamer nas horas livres' },
+  { id: 107, name: 'Juliana Rocha', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop', mutualFriends: 35, isOnline: true, location: 'Porto Alegre, RS', relationship: 'namorando', bio: 'Jornalista e blogueira de lifestyle' },
+  { id: 108, name: 'Felipe Martins', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop', mutualFriends: 20, isOnline: false, location: 'Recife, PE', relationship: 'solteiro', bio: 'Fotógrafo profissional e aventureiro' },
+  { id: 109, name: 'Larissa Alves', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop', mutualFriends: 29, isOnline: true, location: 'Goiânia, GO', relationship: 'solteira', bio: 'Arquiteta e amante de plantas' },
+  { id: 110, name: 'Diego Pereira', avatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop', mutualFriends: 16, isOnline: false, location: 'Manaus, AM', relationship: 'namorando', bio: 'Biólogo e defensor da natureza' },
+  { id: 111, name: 'Beatriz Lima', avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop', mutualFriends: 33, isOnline: true, location: 'Belém, PA', relationship: 'casada', bio: 'Chef de cozinha e foodie' },
+  { id: 112, name: 'Gustavo Nunes', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop', mutualFriends: 14, isOnline: false, location: 'Vitória, ES', relationship: 'solteiro', bio: 'Personal trainer e atleta' },
+  { id: 113, name: 'Fernanda Castro', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop', mutualFriends: 25, isOnline: true, location: 'Florianópolis, SC', relationship: 'solteira', bio: 'Psicóloga e escritora' },
+  { id: 114, name: 'Lucas Barbosa', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&h=100&fit=crop', mutualFriends: 19, isOnline: false, location: 'Campo Grande, MS', relationship: 'namorando', bio: 'Veterinário e protetor de animais' },
+  { id: 115, name: 'Sophia Dias', avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&h=100&fit=crop', mutualFriends: 37, isOnline: true, location: 'João Pessoa, PB', relationship: 'solteira', bio: 'Influencer digital e empreendedora' },
+  { id: 116, name: 'Matheus Souza', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop', mutualFriends: 22, isOnline: false, location: 'Aracaju, SE', relationship: 'solteiro', bio: 'Advogado e jogador de futebol amador' },
+  { id: 117, name: 'Giovanna Reis', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop', mutualFriends: 28, isOnline: true, location: 'Teresina, PI', relationship: 'namorando', bio: 'Dentista e dançarina' },
+  { id: 118, name: 'Rafael Gomes', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop', mutualFriends: 17, isOnline: false, location: 'Maceió, AL', relationship: 'casado', bio: 'Contador e músico' },
+  { id: 119, name: 'Vitória Mendes', avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100&h=100&fit=crop', mutualFriends: 32, isOnline: true, location: 'São Luís, MA', relationship: 'solteira', bio: 'Farmacêutica e yoga instructor' },
+  { id: 120, name: 'Thiago Cardoso', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop', mutualFriends: 21, isOnline: false, location: 'Natal, RN', relationship: 'solteiro', bio: 'Piloto e aventureiro' }
 ];
 
 export const demoCommunities = [

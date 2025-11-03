@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { X, Globe, Users, Crown, Lock } from 'lucide-react';
+import { X, Globe, Users, Crown, Lock, Search } from 'lucide-react';
 
 const AllCommunitiesModal = ({ communities, onClose }) => {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filtrar comunidades baseado no termo de pesquisa
+  const filteredCommunities = useMemo(() => {
+    if (!searchTerm.trim()) return communities;
+    
+    return communities.filter(community =>
+      community.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      community.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      community.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      community.admin.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [communities, searchTerm]);
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -18,7 +31,7 @@ const AllCommunitiesModal = ({ communities, onClose }) => {
         <div className="bg-orkut-pink text-white p-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Globe size={20} />
-            <h2 className="text-lg font-bold">Todas as Comunidades ({communities.length})</h2>
+            <h2 className="text-lg font-bold">Todas as Comunidades ({filteredCommunities.length})</h2>
           </div>
           <button
             onClick={onClose}
@@ -28,10 +41,53 @@ const AllCommunitiesModal = ({ communities, onClose }) => {
           </button>
         </div>
 
+        {/* Search Bar */}
+        <div className="p-4 border-b border-gray-200">
+          <div className="relative">
+            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Pesquisar comunidades por nome, descrição, categoria ou administrador..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orkut-pink focus:border-transparent outline-none transition-all"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
+          {searchTerm && (
+            <p className="text-sm text-gray-600 mt-2">
+              {filteredCommunities.length === 0 
+                ? 'Nenhuma comunidade encontrada' 
+                : `${filteredCommunities.length} comunidade${filteredCommunities.length !== 1 ? 's' : ''} encontrada${filteredCommunities.length !== 1 ? 's' : ''}`
+              }
+            </p>
+          )}
+        </div>
+
         {/* Content */}
-        <div className="p-4 overflow-y-auto max-h-[calc(80vh-80px)]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {communities.map((community, index) => (
+        <div className="p-4 overflow-y-auto max-h-[calc(80vh-140px)]">
+          {filteredCommunities.length === 0 ? (
+            <div className="text-center py-8">
+              <Globe size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-500 text-lg">
+                {searchTerm ? 'Nenhuma comunidade encontrada' : 'Nenhuma comunidade para exibir'}
+              </p>
+              {searchTerm && (
+                <p className="text-gray-400 text-sm mt-2">
+                  Tente pesquisar com outros termos
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredCommunities.map((community, index) => (
               <motion.div
                 key={community.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -108,8 +164,9 @@ const AllCommunitiesModal = ({ communities, onClose }) => {
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
     </div>

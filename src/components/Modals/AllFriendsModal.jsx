@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { X, Users, MapPin } from 'lucide-react';
+import { X, Users, MapPin, Search } from 'lucide-react';
 
 const AllFriendsModal = ({ friends, onClose }) => {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
   
+  // Filtrar amigos baseado no termo de pesquisa
+  const filteredFriends = useMemo(() => {
+    if (!searchTerm.trim()) return friends;
+    
+    return friends.filter(friend =>
+      friend.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (friend.location && friend.location.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  }, [friends, searchTerm]);
+
   const getInitials = (name) => {
     return name
       .split(' ')
@@ -27,7 +38,7 @@ const AllFriendsModal = ({ friends, onClose }) => {
         <div className="bg-orkut-pink text-white p-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Users size={20} />
-            <h2 className="text-lg font-bold">Todos os Amigos ({friends.length})</h2>
+            <h2 className="text-lg font-bold">Todos os Amigos ({filteredFriends.length})</h2>
           </div>
           <button
             onClick={onClose}
@@ -37,10 +48,53 @@ const AllFriendsModal = ({ friends, onClose }) => {
           </button>
         </div>
 
+        {/* Search Bar */}
+        <div className="p-4 border-b border-gray-200">
+          <div className="relative">
+            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Pesquisar amigos por nome ou localização..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orkut-pink focus:border-transparent outline-none transition-all"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
+          {searchTerm && (
+            <p className="text-sm text-gray-600 mt-2">
+              {filteredFriends.length === 0 
+                ? 'Nenhum amigo encontrado' 
+                : `${filteredFriends.length} amigo${filteredFriends.length !== 1 ? 's' : ''} encontrado${filteredFriends.length !== 1 ? 's' : ''}`
+              }
+            </p>
+          )}
+        </div>
+
         {/* Content */}
-        <div className="p-4 overflow-y-auto max-h-[calc(80vh-80px)]">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {friends.map((friend, index) => (
+        <div className="p-4 overflow-y-auto max-h-[calc(80vh-140px)]">
+          {filteredFriends.length === 0 ? (
+            <div className="text-center py-8">
+              <Users size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-500 text-lg">
+                {searchTerm ? 'Nenhum amigo encontrado' : 'Nenhum amigo para exibir'}
+              </p>
+              {searchTerm && (
+                <p className="text-gray-400 text-sm mt-2">
+                  Tente pesquisar com outros termos
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {filteredFriends.map((friend, index) => (
               <motion.div
                 key={friend.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -94,8 +148,9 @@ const AllFriendsModal = ({ friends, onClose }) => {
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
     </div>
